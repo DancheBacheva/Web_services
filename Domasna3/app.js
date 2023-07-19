@@ -19,7 +19,7 @@ app.use(
     secret: process.env.JWT_SECRET,
   })
   .unless({
-    path: ["/oglas/v1/signup", "/oglas/v1/login", "/oglas/avtomobili"]
+    path: ["/oglas/v1/signup", "/oglas/v1/login", "/oglas/avtomobili", "/oglas/velosipedi", "/oglas/nedviznini", "/oglas/telefoni"]
   })
 )
 
@@ -36,15 +36,15 @@ app.get("/oglas/velosipedi", velosipediHandler.getAllVelosipedi);
 app.patch("/oglas/velosipedi/:id", velosipediHandler.updateVelosiped);
 app.delete("/oglas/velosipedi/:id", velosipediHandler.deleteVelosiped);
 
-app.post("oglas/nedviznini", nedvizniniHandler.createNedviznini);
-app.get("oglas/nedviznini", nedvizniniHandler.getAllNedviznini);
-app.patch("oglas/nedviznini/:id", nedvizniniHandler.updateNedviznini);
-app.delete("oglas/nedviznini/:id", nedvizniniHandler.deleteNedviznini);
+app.post("/oglas/nedviznini", nedvizniniHandler.createNedviznini);
+app.get("/oglas/nedviznini", nedvizniniHandler.getAllNedviznini);
+app.patch("/oglas/nedviznini/:id", nedvizniniHandler.updateNedviznini);
+app.delete("/oglas/nedviznini/:id", nedvizniniHandler.deleteNedviznini);
 
-app.post("oglas/telefoni", telefoniHandler.createTelefon);
-app.get("oglas/telefoni", telefoniHandler.getAllTelefoni);
-app.patch("oglas/telefoni/:id", telefoniHandler.updateTelefon);
-app.delete("oglas/telefoni/:id", telefoniHandler.deleteTelefon);
+app.post("/oglas/telefoni", telefoniHandler.createTelefon);
+app.get("/oglas/telefoni", telefoniHandler.getAllTelefoni);
+app.patch("/oglas/telefoni/:id", telefoniHandler.updateTelefon);
+app.delete("/oglas/telefoni/:id", telefoniHandler.deleteTelefon);
 
 
 
