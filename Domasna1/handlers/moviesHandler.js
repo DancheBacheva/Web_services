@@ -1,5 +1,4 @@
 const Movie = require("../pkg/movies/moviesSchema");
-const moviesHandler = require("./moviesHandler");
 
 exports.createMovie = async (req, res) =>{
   try{
