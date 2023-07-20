@@ -21,13 +21,25 @@ exports.getAllAvtomobili = async (req, res) => {
   );
   const query = JSON.parse(queryString);
   const avtomobil = await Avtomobil.find(query);
-  res.send(Avtomobil);
+  res.send(avtomobil);
 }catch(err){
   res.status(400).json({
     status: "fail",
     message: err
   });
 }
+};
+
+exports.getOneAvtomobil = async (req, res) => {
+  try{
+    const oneAvtomobil = await Avtomobil.findById(req.params.id);
+    res.send(oneAvtomobil);
+  }catch(err){
+    res.status(400).json({
+      status: "fail",
+      message: err
+    });
+  }
 };
 
 exports.updateAvtomobil = async (req, res) => {

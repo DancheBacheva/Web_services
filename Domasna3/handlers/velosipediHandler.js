@@ -21,13 +21,25 @@ exports.getAllVelosipedi = async (req, res) => {
   );
   const query = JSON.parse(queryString);
   const velosiped = await Velosiped.find(query);
-  res.send(Velosiped);
+  res.send(velosiped);
 }catch(err){
   res.status(400).json({
     status: "fail",
     message: err
   });
 }
+};
+
+exports.getOneVelosiped = async (req, res) => {
+  try{
+    const oneVelosiped = await Velosiped.findById(req.params.id);
+    res.send(oneVelosiped);
+  }catch(err){
+    res.status(400).json({
+      status: "fail",
+      message: err
+    });
+  }
 };
 
 exports.updateVelosiped = async (req, res) => {

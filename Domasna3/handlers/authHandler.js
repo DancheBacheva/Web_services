@@ -49,17 +49,18 @@ exports.login = async (req, res) => {
 
     const user = await User.findOne({ mejl });
     if(!user){
-      return res.status(400).send("Ne postoi korisnik so vakov mejl vo databazata")
+      return res.status(400).send("Ne postoi korisnik so vakov mejl vo databazata");
     }
 
-    const isPasswordValid = bcrypt.compareSync(lozinka, user.lozinka);
-    if(!isPasswordValid){
-      return res.status(400).send("Vnesovte pogresna lozinka")
+    const isLozinkaValid = bcrypt.compareSync(lozinka, user.lozinka);
+    if(!isLozinkaValid){
+      return res.status(400).send("Vnesovte pogresna lozinka");
     }
 
     const token = jwt.sign(
       {
         id: user._id, ime: user.ime },
+        process.env.JWT_SECRET,
         {
           expiresIn: process.env.JWT_EXPIRES,
         }
@@ -70,7 +71,7 @@ exports.login = async (req, res) => {
         Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
       ),
       secure: false,
-      httpOnly: true
+      httpOnly: true,
     });
 
     res.status(201).json({

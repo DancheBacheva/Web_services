@@ -21,13 +21,25 @@ exports.getAllTelefoni = async (req, res) => {
   );
   const query = JSON.parse(queryString);
   const telefon = await Telefon.find(query);
-  res.send(Telefon);
+  res.send(telefon);
 }catch(err){
   res.status(400).json({
     status: "fail",
     message: err
   });
 }
+};
+
+exports.getOneTelefon = async (req, res) => {
+  try{
+    const oneTelefon = await Telefon.findById(req.params.id);
+    res.send(oneTelefon);
+  }catch(err){
+    res.status(400).json({
+      status: "fail",
+      message: err
+    });
+  }
 };
 
 exports.updateTelefon = async (req, res) => {

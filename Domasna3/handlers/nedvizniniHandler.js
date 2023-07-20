@@ -21,13 +21,25 @@ exports.getAllNedviznini = async (req, res) => {
   );
   const query = JSON.parse(queryString);
   const nedviznini = await Nedviznini.find(query);
-  res.send(Nedviznini);
+  res.send(nedviznini);
 }catch(err){
   res.status(400).json({
     status: "fail",
     message: err
   });
 }
+};
+
+exports.getOneNedviznina = async (req, res) => {
+  try{
+    const oneNedviznina = await Nedviznini.findById(req.params.id);
+    res.send(oneNedviznina);
+  }catch(err){
+    res.status(400).json({
+      status: "fail",
+      message: err
+    });
+  }
 };
 
 exports.updateNedviznini = async (req, res) => {

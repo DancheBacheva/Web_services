@@ -13,6 +13,8 @@ db.init();
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+
+//so ovoj midlver gi protektirame site ruti osven onie sto se vo metodata unless
 app.use(
   jwt.expressjwt({
     algorithms: ["HS256"],
@@ -28,21 +30,25 @@ app.post("/oglas/v1/login", authHandler.login);
 
 app.post("/oglas/avtomobili", avtomobiliHandler.createAvtomobil);
 app.get("/oglas/avtomobili", avtomobiliHandler.getAllAvtomobili);
+app.get("/oglas/avtomobili/:id", avtomobiliHandler.getOneAvtomobil);
 app.patch("/oglas/avtomobili/:id", avtomobiliHandler.updateAvtomobil);
 app.delete("/oglas/avtomobili/:id", avtomobiliHandler.deleteAvtomobil);
 
 app.post("/oglas/velosipedi", velosipediHandler.createVelosiped);
 app.get("/oglas/velosipedi", velosipediHandler.getAllVelosipedi);
+app.get("/oglas/velosipedi/:id", velosipediHandler.getOneVelosiped);
 app.patch("/oglas/velosipedi/:id", velosipediHandler.updateVelosiped);
 app.delete("/oglas/velosipedi/:id", velosipediHandler.deleteVelosiped);
 
 app.post("/oglas/nedviznini", nedvizniniHandler.createNedviznini);
 app.get("/oglas/nedviznini", nedvizniniHandler.getAllNedviznini);
+app.get("/oglas/nedviznini/:id", nedvizniniHandler.getOneNedviznina);
 app.patch("/oglas/nedviznini/:id", nedvizniniHandler.updateNedviznini);
 app.delete("/oglas/nedviznini/:id", nedvizniniHandler.deleteNedviznini);
 
 app.post("/oglas/telefoni", telefoniHandler.createTelefon);
 app.get("/oglas/telefoni", telefoniHandler.getAllTelefoni);
+app.get("/oglas/telefoni/:id", telefoniHandler.getOneTelefon);
 app.patch("/oglas/telefoni/:id", telefoniHandler.updateTelefon);
 app.delete("/oglas/telefoni/:id", telefoniHandler.deleteTelefon);
 
