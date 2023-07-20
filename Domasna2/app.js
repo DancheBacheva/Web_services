@@ -3,6 +3,7 @@ const db = require("./pkg/db/index");
 const jwt = require("express-jwt");
 
 const authHandler = require("./handlers/authHandler");
+const tvshowHandler = require("./handlers/tvshowHandler");
 
 const app = express();
 
@@ -19,12 +20,18 @@ app.use(
     secret: process.env.JWT_SECRET,
   })
   .unless({
-    path: ["/api/v1/signup", "/api/v1/login"]
+    path: ["/api/v1/signup", "/api/v1/login", "/tvshows"]
   })
 );
 
 app.post("/api/v1/signup", authHandler.signup);
 app.post("/api/v1/login", authHandler.login);
+
+app.post("/api/tvshows", tvshowHandler.createTvshow);
+app.get("/api/tvshows", tvshowHandler.getAllTvshows);
+app.get("/api/tvshows/:id", tvshowHandler.getOneTvshow);
+app.patch("/api/tvshows/:id", tvshowHandler.updateTvshow);
+app.delete("/api/tvshows/:id", tvshowHandler.deleteTvshow);
 
 app.listen(process.env.PORT, (err)=>{
   if(err){
