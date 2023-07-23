@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/global.css" />
+  <title>OGLASI</title>
+</head>
+  <body>
+    <h1><%= naslov %></h1>
+    
+    <% if (OGLASI.length === 0) {%>
+      <p>Не се пронајдени огласи.</p>
+    <% } else { %>
+      <% OGLASI.forEach(oglas => {%>
+        <div class="oglas">
+          <h2 class="kategorija"><%= oglas.kategorija %></h2>
+          <h3 class="vid"><%= oglas.vid %></h3>
+          <p class="opis"><%= oglas.opis %></p>
+          <p class="lokacija"><%= oglas.lokacija %></p>
+          <p class="godina"><%= oglas.godina %></p>
+          <p class="cena"><%= oglas.cena %></p>
+        </div>
+      <% }); %> 
+   <% } %>
+
+    <form action="/createOglas" method="POST">
+      <label for="kategorija">Категорија:</label>
+      <input type="text" id="kategorija" name="kategorija"><br>
+      <label for="vid">Вид:</label>
+      <input type="text" id="vid" name="vid"><br>
+      <label for="opis">Опис:</label>
+      <input type="text" id="opis" name="opis"><br>
+      <label for="lokacija">Локација:</label>
+      <input type="text" id="lokacija" name="lokacija"><br>
+      <label for="godina">Година:</label>
+      <input type="number" id="godina" name="godina"><br>
+      <label for="cena">Цена:</label>
+      <input type="number" id="cena" name="cena"><br>
+    </form>
+  </body>
+</html>
