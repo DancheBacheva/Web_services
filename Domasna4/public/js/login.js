@@ -8,6 +8,7 @@ const login = async ( mejl, lozinka) => {
         lozinka,
       },
     });
+    console.log(res);
     window.location.href = "/viewOglasi";
   }catch(err){
     console.log(err);

@@ -35,7 +35,7 @@ app.use(
     },
   })
   .unless({
-    path: ["/api/v1/signup", "/api/v1/login", "/api/oglasi", "/login", "/viewOglasi"]
+    path: ["/api/v1/signup", "/api/v1/login", "/api/oglasi", "/login", "/viewOglasi", "/createOglas"]
   })
 );
 
@@ -49,8 +49,8 @@ app.patch("/api/oglasi/:id", oglasiHandler.updateOglas);
 app.put("/api/oglasi/:id", oglasiHandler.replaceOglas);
 app.delete("/api/oglasi/:id", oglasiHandler.deleteOglas);
 
-app.get("/me", oglasiHandler.getByKorisnik);
-app.post("/createkorisnik", oglasiHandler.createByKorisnik);
+app.get("/mojoglas", oglasiHandler.getByKorisnik);
+app.post("/mojnovoglas", oglasiHandler.createByKorisnik);
 
 // view ruti
 app.get("/viewOglasi", viewHandler.oglasView);
