@@ -1,0 +1,35 @@
+*{
+  font-family: sans-serif;
+}
+
+.film {
+  background-color:crimson;
+  color: white;
+}
+
+.moviedetails{
+    background-image: url(/image/movies/background.jpg);
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+
+.onemovie{
+  background-color:rgb(8, 6, 6);
+  color: beige;
+}
+
+img{
+  margin-right: 10px;
+}
+
+input{
+  width: 200px;
+  height: 20px;
+  border-radius: 10px;
+  background-color: pink;
+}
+
+button{
+  border-radius: 10px;
+  background-color: rgb(236, 228, 229);
+}
