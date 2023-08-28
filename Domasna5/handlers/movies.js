@@ -65,6 +65,12 @@ exports.update = async (req, res) => {
       // req.body.slika = req.file.filename;
     }
 
+     // povekje sliki
+     if (req.files && req.files.sliki) {
+      const filenames = req.files.sliki.map((file) => file.filename);
+      req.body.sliki = filenames;
+    }
+
     const movie = await Movie.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
@@ -88,7 +94,7 @@ exports.getAll = async (req, res) => {
   try {
     console.log(req.semos);
 
-    // so populate metodata namesto idinja gi popoulirame so nivnite vrednosti
+    // so populate metodata namesto idinja gi populirame so nivnite vrednosti
     let movies = await Movie.find().populate("author");
     res.status(200).json({
       status: "success",

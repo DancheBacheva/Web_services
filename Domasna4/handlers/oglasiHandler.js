@@ -12,24 +12,29 @@ exports.createOglas = async (req, res) => {
   }catch(err){
     res.status(404).json({
       status: "fail",
-      message: err
+      message: err,
     });
   }
 };
 
 exports.getAllOglasi = async (req, res) => {
-  try{
-    const oglasi = await Oglas.find().populate("avtor");
+  try {
+    const queryObj = {...req.query}
+    let queryString = JSON.stringify(queryObj)
+    queryString = queryString.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`)
+    const query = JSON.parse(queryString); 
+
+    const oglasi = await Oglas.find(query);
     res.status(200).json({
       status: "success",
       data: {
         oglasi,
       },
     });
-  }catch(err){
+  }catch (err) {
     res.status(404).json({
       status: "fail",
-      message: err
+      message: err,
     });
   }
 };
@@ -76,6 +81,7 @@ exports.replaceOglas = async (req, res) => {
   try{
     const replacedOglas = await Oglas.findOneAndReplace(
       { _id: req.params.id },
+      req.body,
       { 
         new: true,
         runValidators: true,  
@@ -90,7 +96,7 @@ exports.replaceOglas = async (req, res) => {
   }catch(err){
     res.status(404).json({
       status: "fail",
-      message: err
+      message: err.message,
     });
   }
 };
@@ -105,14 +111,14 @@ exports.deleteOglas = async (req, res) => {
   }catch(err){
     res.status(404).json({
       status: "fail",
-      message: err
+      message: err,
     });
   }
 };
 
-exports.createByKorisnik = async (req, res) => {
+exports.createByUser = async (req, res, next) => {
   try{
-    const korisnikId = req.auth.id;
+    const userId = req.auth.id;
     const oglasPost = await Oglas.create({
       kategorija: req.body.kategorija,
       vid: req.body.vid,
@@ -120,7 +126,7 @@ exports.createByKorisnik = async (req, res) => {
       lokacija: req.body.lokacija,
       godina: req.body.godina,
       cena: req.body.cena,
-      avtor: korisnikId
+      author: userId
     });
     res.status(201).json(oglasPost);
   }catch(err){
@@ -128,10 +134,10 @@ exports.createByKorisnik = async (req, res) => {
   }
 };
 
-exports.getByKorisnik = async (req, res) => {
+exports.getByUser = async (req, res) => {
   try{
-    const korisnikId = req.auth.id;
-    const mojOglas = await Oglas.find({avtor: korisnikId})
+    const userId = req.auth.id;
+    const mojOglas = await Oglas.find({author: userId}).populate("author");
     res.status(201).json(mojOglas);
   }catch(err){
     res.status(500).json({ error: err });

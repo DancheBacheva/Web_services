@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 
-const korisnikSchema = new mongoose.Schema({
-  ime: {
+const userSchema = new mongoose.Schema({
+  name: {
     type: String,
     required: [true, "Mora da se vnese ime"]
   },
-  mejl: {
+  email: {
     type: String,
     required: [true, "Mora da se vnese mejl"],
     unique: true,
@@ -18,18 +18,18 @@ const korisnikSchema = new mongoose.Schema({
     enum: ["korisnik", "admin"],
     default: "korisnik"
   },
-  lozinka: {
+  password: {
     type: String,
     required: [true, "Mora da se vnese lozinka"],
     minlength: [8, "Lozinkata mora da se sotoi od najmalku 8 karakteri"]
   },
 });
 
-korisnikSchema.pre("save", async function (next){
-  if(!this.isModified("lozinka")) return next();
-  this.lozinka = await bcrypt.hash(this.lozinka, 12);
-  next()
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  this.password = await bcrypt.hash(this.password, 12);
+  next();
 });
 
-const Korisnik = mongoose.model("Korisnik", korisnikSchema);
-module.exports = Korisnik;
+const User = mongoose.model("User", userSchema);
+module.exports = User;

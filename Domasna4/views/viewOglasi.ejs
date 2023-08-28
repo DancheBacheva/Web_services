@@ -9,20 +9,18 @@
   <body>
     <h1><%= naslov %></h1>
     
-    <% if (oglasi.length === 0) {%>
+    <% if (mojoglas.length === 0) { %>
       <p>Не се пронајдени огласи.</p>
-    <% } else { %>
-      <% oglasi.forEach(oglas => {%>
+    <% } else { %> <% mojoglas.forEach(oglas =>{%>
         <div class="oglas">
-          <h2 class="kategorija"><%= oglas.kategorija %></h2>
-          <h3 class="vid"><%= oglas.vid %></h3>
-          <p class="opis"><%= oglas.opis %></p>
-          <p class="lokacija"><%= oglas.lokacija %></p>
-          <p class="godina"><%= oglas.godina %></p>
-          <p class="cena"><%= oglas.cena %></p>
+          <p class="kategorija">Категорија: <%= oglas.kategorija %></p>
+          <p class="vid">Вид: <%= oglas.vid %></p>
+          <p class="opis">Опис: <%= oglas.opis %></p>
+          <p class="lokacija">Локација: <%= oglas.lokacija %></p>
+          <p class="godina">Година: <%= oglas.godina %></p>
+          <p class="cena">Цена: <%= oglas.cena %></p>
         </div>
-      <% }); %> 
-   <% } %>
+      <%}); %> <% } %>
 
     <form action="/createOglas" method="post">
       <label for="kategorija">Категорија:</label>

@@ -8,30 +8,32 @@ const viewHandler = require("./handlers/viewHandler");
 const oglasiHandler = require("./handlers/oglasiHandler");
 
 const app = express();
-db.init();
 
 app.set("view engine", "ejs");
-app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(express.static("public"));
 
+db.init();
+
+//so ovoj midlver implementirame protekcija
 app.use(
   jwt
-  .expressjwt({
-    algorithms: ["HS256"],
-    secret: process.env.JWT_SECRET,
-    getToken: (req) => {
-      if (
-        req.headers.authorization &&
-        req.headers.authorization.split(" ")[0] === "Bearer"
-      ) {
-        return req.headers.authorization.split(" ")[1];
-      }
-      if (req.cookies.jwt) {
-        return req.cookies.jwt;
-      }
-      return null; // vo slucaj ako nemame isprateno token
+    .expressjwt({
+      algorithms: ["HS256"],
+      secret: process.env.JWT_SECRET,
+      getToken: (req) => {
+        if (
+          req.headers.authorization &&
+          req.headers.authorization.split(" ")[0] === "Bearer"
+        ) {
+          return req.headers.authorization.split(" ")[1];
+        }
+        if (req.cookies.jwt) {
+          return req.cookies.jwt;
+        }
+        return null; // vo slucaj ako nemame isprateno token
     },
   })
   .unless({
@@ -42,15 +44,15 @@ app.use(
 app.post("/api/v1/signup", authHandler.signup);
 app.post("/api/v1/login", authHandler.login);
 
-app.post("/api/oglasi", oglasiHandler.createOglas);
-app.get("/api/oglasi", oglasiHandler.getAllOglasi);
-app.get("/api/oglasi/:id", oglasiHandler.getOneOglas);
-app.patch("/api/oglasi/:id", oglasiHandler.updateOglas);
-app.put("/api/oglasi/:id", oglasiHandler.replaceOglas);
-app.delete("/api/oglasi/:id", oglasiHandler.deleteOglas);
+app.get("/oglasi", oglasiHandler.getAllOglasi);
+app.post("/oglasi", oglasiHandler.createOglas);
+app.get("/oglasi/:id", oglasiHandler.getOneOglas);
+app.patch("/oglasi/:id", oglasiHandler.updateOglas);
+app.put("/oglasi/:id", oglasiHandler.replaceOglas);
+app.delete("/oglasi/:id", oglasiHandler.deleteOglas);
 
-app.get("/mojoglas", oglasiHandler.getByKorisnik);
-app.post("/mojnovoglas", oglasiHandler.createByKorisnik);
+app.get("/mojoglas", oglasiHandler.getByUser);
+app.post("/mojnovoglas", oglasiHandler.createByUser);
 
 // view ruti
 app.get("/viewOglasi", viewHandler.oglasView);

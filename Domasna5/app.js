@@ -48,7 +48,6 @@ app.use(
 app.post("/api/v1/signup", authHandler.signup);
 app.post("/api/v1/login", authHandler.login);
 
-app.get("/movies", authHandler.middelwareTest, movies.getAll);
 app.get("/movies/:id", movies.getOne);
 app.post("/movies", movies.create);
 app.put("/movies/:id", movies.replace);
@@ -64,7 +63,7 @@ app.get("/login", viewHandler.getLoginForm);
 app.post("/createMovie", viewHandler.createMovie);
 app.get("/deleteMovie/:id", viewHandler.deleteMovie);
 app.get("/viewMovies/:id", viewHandler.viewMovieDetails);
-app.post("/modifyMovie/:id", viewHandler.modifyMovie);
+app.post("/modifyMovie/:id", movies.uploadFilmsPhotos, viewHandler.modifyMovie);
 
 //? slusame aplikacija
 app.listen(process.env.PORT, (err) => {

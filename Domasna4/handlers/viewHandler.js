@@ -1,6 +1,6 @@
 const Oglas = require("../pkg/oglasi/oglasiSchema");
 
-exports.getLoginForm = (req, res) => {
+exports.getLoginForm = async (req, res) => {
   try{ 
     res.status(200).render("login",
     {

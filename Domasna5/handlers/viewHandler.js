@@ -64,6 +64,19 @@ exports.viewMovieDetails = async (req, res) => {
 
 exports.modifyMovie = async (req, res) => {
   try {
+    // single slika
+    if(req.file) {
+      const filename = req.file.filename;
+      req.body.slika = filename;
+      // req.body.slika = req.file.filename;
+    }
+
+     // povekje sliki
+     if (req.files && req.files.sliki) {
+      const filenames = req.files.sliki.map((file) => file.filename);
+      req.body.sliki = filenames;
+    }
+    
     await Movie.findByIdAndUpdate(req.params.id, req.body);
 
     res.redirect("/viewMovies/" + req.params.id);
