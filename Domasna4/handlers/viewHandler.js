@@ -14,7 +14,7 @@ exports.getLoginForm = async (req, res) => {
 exports.oglasView = async (req, res) => {
   try{
     const oglasi = await Oglas.find();
-    req.status(200).render("viewOglasi", {
+    res.status(200).render("viewOglasi", {
       status: "success",
       naslov: "OGLAS",
       oglasi,

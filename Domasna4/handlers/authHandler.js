@@ -10,25 +10,25 @@ exports.signup = async (req, res) => {
       password: req.body.password,
     });
 
-    // const token = jwt.sign({
-    //   id: novKorisnik._id,
-    //   ime: novKorisnik.ime},
-    //   process.env.JWT_SECRET,
-    //   {
-    //     expiresIn: process.env.JWT_EXPIRES
-    // });
+    const token = jwt.sign({
+      id: newUser._id,
+      ime: newUser.ime},
+      process.env.JWT_SECRET,
+      {
+        expiresIn: process.env.JWT_EXPIRES
+    });
 
-    // res.cookie("jwt", token, {
-    //   expires: new Date(
-    //     Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
-    //   ),
-    //   secure: false,
-    //   httpOnly: true
-    // });
+    res.cookie("jwt", token, {
+      expires: new Date(
+        Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
+      ),
+      secure: false,
+      httpOnly: true
+    });
 
     res.status(201).json({
       status: "success",
-      // token, 
+      token, 
       data: {
         user: newUser,
       },
@@ -78,6 +78,7 @@ exports.login = async (req, res) => {
       token,
     });
   } catch (err) {
-    return res.status(500).send("Internal server error");
+    console.error(err);
+return res.status(500).send("Internal server error: " + err.message);
   }
 };

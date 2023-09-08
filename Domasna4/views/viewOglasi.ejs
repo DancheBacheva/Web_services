@@ -9,10 +9,27 @@
   <body>
     <h1><%= naslov %></h1>
     
-    <% if (mojoglas.length === 0) { %>
+    <form action="/createOglas" method="post" class="form-container">
+      <label for="kategorija">Категорија:</label>
+      <input type="text" id="kategorija" name="kategorija">
+      <label for="vid">Вид:</label>
+      <input type="text" id="vid" name="vid">
+      <label for="opis">Опис:</label>
+      <input type="text" id="opis" name="opis"><br><br>
+      <label for="lokacija">Локација:</label>
+      <input type="text" id="lokacija" name="lokacija">
+      <label for="godina">Година:</label>
+      <input type="number" id="godina" name="godina">
+      <label for="cena">Цена:</label>
+      <input type="number" id="cena" name="cena"><br>
+      <button class="button" type="submit" name="createoglas">Креирај нов оглас</button>
+    </form>
+
+    <% if (oglasi.length === 0) { %>
       <p>Не се пронајдени огласи.</p>
-    <% } else { %> <% mojoglas.forEach(oglas =>{%>
+    <% } else { %> <% oglasi.forEach(oglas =>{%>
         <div class="oglas">
+          <a href="/viewOglasi/<%=oglas._id%>"></a>
           <p class="kategorija">Категорија: <%= oglas.kategorija %></p>
           <p class="vid">Вид: <%= oglas.vid %></p>
           <p class="opis">Опис: <%= oglas.opis %></p>
@@ -20,22 +37,6 @@
           <p class="godina">Година: <%= oglas.godina %></p>
           <p class="cena">Цена: <%= oglas.cena %></p>
         </div>
-      <%}); %> <% } %>
-
-    <form action="/createOglas" method="post">
-      <label for="kategorija">Категорија:</label>
-      <input type="text" id="kategorija" name="kategorija"><br>
-      <label for="vid">Вид:</label>
-      <input type="text" id="vid" name="vid"><br>
-      <label for="opis">Опис:</label>
-      <input type="text" id="opis" name="opis"><br>
-      <label for="lokacija">Локација:</label>
-      <input type="text" id="lokacija" name="lokacija"><br>
-      <label for="godina">Година:</label>
-      <input type="number" id="godina" name="godina"><br>
-      <label for="cena">Цена:</label>
-      <input type="number" id="cena" name="cena"><br>
-      <button class="button" type="submit" name="createoglas">Креирај нов оглас</button>
-    </form>
+      <%}); %> <% } %>    
   </body>
 </html>
